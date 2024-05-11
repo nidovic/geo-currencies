@@ -1,39 +1,70 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# GeoCurrencies
+[![pub package](https://img.shields.io/pub/v/geo-curencies.svg)](https://pub.dev/packages/geo-curencies)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![stars](https://img.shields.io/github/stars/nidovic/geo-currencies)
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Flutter Package that provides methods for converting between geographic coordinates and addresses.
 
 ## Features
+* get currency data by coordinate: The library provides methods to get currency data of a given geographic coordinate.
+* format amount with currency: The library provides methods to easily format amount with currency symbol.
+* Address suggestions: The library provides methods to get address suggestions for a given address.
+* Support for multiple languages: The methods accept an optional Locale parameter, which can be used to specify the language. The default language is English.
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+## Installation
 
-## Getting started
+Add this to your package's pubspec.yaml file:
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
+```yaml
+dependencies:
+  geo-currencies: <lastest>
+```
 ## Usage
+The GeocurrenciesInterface class is implemented as a interface, with a factory constructor that returns different instance by optional GeoCurrenciesType given, by default the GeoCurrenciesType is live.
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
+For some tests in your code your can do:
 ```dart
-const like = 'sample';
+GeoCurrenciesInterface geoCurrencies = GeoCurrenciesInterface(GeoCurrenciesType.fake);
+```
+For live implementation in your code your can do:
+```dart
+GeoCurrenciesInterface geoCurrencies = GeoCurrenciesInterface(GeoCurrenciesType.live);
+```
+Or
+```dart
+GeoCurrenciesInterface geoCurrencies = GeoCurrenciesInterface();
 ```
 
-## Additional information
+### getCurrencyDataByCoordinate
+```dart
+  CurrencyData? currencyData = await geoCurrencies.getCurrencyDataByCoordinate(
+    latitude: 37.4219999,
+    longitude: 32.0840575,
+  );
+```
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+### formatAmountWithCurrencySymbol
+```dart
+  String amountToDisplay = geoCurrencies.formatAmountWithCurrencySymbol(
+    amount: 10,
+    currencyCodeAlpha3: 'USD',
+    locale: const Locale('en','US')
+  );
+```
+## Responses
+
+CurrencyData is a class that represents a currency and its details. It has the following attributes:
+
+| Attribute     | Type   | Description |
+|---------------|--------|-------------|
+| codeAlpha3     | String | represents the currency code in form alpha 3. |
+| name      | String | represents the currency name. |
+| countryName      | String    | represents the country where the currency is used. |
+| symbol  | String    | represents the symbol of the currency. |
+
+## Dependencies
+```yaml
+http: ^1.1.0
+intl: ^0.18.1
+logging: ^1.0.2
+```
