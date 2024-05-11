@@ -1,5 +1,5 @@
-import 'package:flutter_geo_currencies/geo_currencies.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:geo_currencies/geo_currencies.dart';
 
 void main() {
   final GeoCurrenciesInterface geoCurrencies =
