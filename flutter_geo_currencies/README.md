@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![stars](https://img.shields.io/github/stars/nidovic/geo-currencies)
 
-Flutter Package that provides methods for converting between geographic coordinates and addresses.
+Flutter Package that provides methods for fetching currencies information.
 
 ## Features
 * get currency data by coordinate: The library provides methods to get currency data of a given geographic coordinate.
@@ -65,6 +65,6 @@ CurrencyData is a class that represents a currency and its details. It has the f
 ## Dependencies
 ```yaml
 http: ^1.1.0
-intl: ^0.18.1
+intl: ^0.19.1
 logging: ^1.0.2
 ```

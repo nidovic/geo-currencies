@@ -27,3 +27,6 @@ migrate_working_dir/
 **/doc/api/
 .dart_tool/
 build/
+
+/lib/flutter_geo_currencies.dart
+/test/flutter_geo_currencies_test.dart

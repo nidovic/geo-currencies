@@ -1,4 +1,4 @@
-library flutter_geo_currencies;
+library geo_currencies;
 
 import 'dart:ui';
 
