@@ -42,6 +42,9 @@ GeoCurrenciesInterface geoCurrencies = GeoCurrenciesInterface();
     longitude: 32.0840575,
   );
 ```
+## Responses
+
+CurrencyData is a class that represents a currency and its details. It has the following attributes:
 
 ### formatAmountWithCurrencySymbol
 ```dart
