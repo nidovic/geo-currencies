@@ -35,12 +35,6 @@ dev_dependencies:
       url: https://github.com/spreeloop/dart-code-linter.git
       ref: f687f9984d4cff5786aa0173465ba772d8384bea
 
-  # Static analysis tool that also collects various useful metrics.
-  dart_code_linter:
-    git:
-      url: https://github.com/spreeloop/dart-code-linter.git
-      ref: f687f9984d4cff5786aa0173465ba772d8384bea
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
