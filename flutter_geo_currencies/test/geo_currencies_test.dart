@@ -2,25 +2,29 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:geo_currencies/geo_currencies.dart';
 
 void main() {
-  final GeoCurrenciesInterface geoCurrencies =
-      GeoCurrenciesInterface(GeoCurrenciesType.fake);
+  final GeoCurrencies geoCurrencies = GeoCurrencies(
+    config: GeoCurrenciesConfig(geoCurrenciesType: GeoCurrenciesType.live),
+  );
   test('Gets currency data by coordinate.', () async {
     await getCurrencyDataByCoordinate(geoCurrencies);
   });
   test('Formats amount with currency symbol.', () async {
     formatAmountWithCurrencySymbol(geoCurrencies);
   });
+  test('Convert amount.', () async {
+    convertAmount(geoCurrencies);
+  });
 }
 
 Future<void> getCurrencyDataByCoordinate(
-  GeoCurrenciesInterface geoCurrencies,
+  GeoCurrencies geoCurrencies,
 ) async {
   final response = await geoCurrencies.getCurrencyDataByCoordinate(
     latitude: 4.052851963460176,
     longitude: 9.717363661147893,
   );
   expect(
-    response?.codeAlpha3,
+    response?.codeIso4217,
     'XAF',
   );
   expect(
@@ -38,14 +42,40 @@ Future<void> getCurrencyDataByCoordinate(
 }
 
 void formatAmountWithCurrencySymbol(
-  GeoCurrenciesInterface geoCurrencies,
+  GeoCurrencies geoCurrencies,
 ) async {
   final response = await geoCurrencies.formatAmountWithCurrencySymbol(
     amount: 10,
-    currencyCodeAlpha3: 'XAF',
+    currencyCodeIso4217: 'XAF',
   );
   expect(
     response,
-    'FCFA 10',
+    'FCFA 10.00',
+  );
+}
+
+void convertAmount(
+  GeoCurrencies geoCurrencies,
+) async {
+  final response = await geoCurrencies.convertAmount(
+    amount: 10,
+    fromCurrencyCodeIso4217: 'EUR',
+    toCurrencyCodeIso4217: 'XAF',
+  );
+  expect(
+    response?.succeeded,
+    false,
+  );
+  expect(
+    response?.baseAmount,
+    10,
+  );
+  expect(
+    response?.formatAmountConverted,
+    'FCFA 6,559.60',
+  );
+  expect(
+    response?.fromCurrencyCodeIso4217,
+    'EUR',
   );
 }

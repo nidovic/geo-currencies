@@ -1,7 +1,7 @@
 /// Representation of a currency data.
 class CurrencyData {
-  /// The stored key ref for the [codeAlpha3] property.
-  static const keyCodeAlpha3 = 'codeAlpha3';
+  /// The stored key ref for the [codeIso4217] property.
+  static const keyCodeIso4217 = 'codeIso4217';
 
   /// The stored key ref for the [name] property.
   static const keyName = 'name';
@@ -12,8 +12,8 @@ class CurrencyData {
   /// The stored key ref for the [symbol] property.
   static const keySymbol = 'symbol';
 
-  /// The currency code in form alpha 3.
-  final String? codeAlpha3;
+  /// The currency code in form iso 4217.
+  final String? codeIso4217;
 
   /// The currency name.
   final String? name;
@@ -26,7 +26,7 @@ class CurrencyData {
 
   /// Constructs a new [CurrencyData].
   CurrencyData({
-    this.codeAlpha3,
+    this.codeIso4217,
     this.symbol,
     this.name,
     this.countryName,
