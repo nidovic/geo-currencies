@@ -3,7 +3,7 @@ import 'package:geo_currencies/geo_currencies.dart';
 
 void main() {
   final GeoCurrencies geoCurrencies = GeoCurrencies(
-    config: GeoCurrenciesConfig(geoCurrenciesType: GeoCurrenciesType.live),
+    config: GeoCurrenciesConfig(geoCurrenciesType: GeoCurrenciesType.fake),
   );
   test('Gets currency data by coordinate.', () async {
     await getCurrencyDataByCoordinate(geoCurrencies);
@@ -11,7 +11,7 @@ void main() {
   test('Formats amount with currency symbol.', () async {
     formatAmountWithCurrencySymbol(geoCurrencies);
   });
-  test('Convert amount.', () async {
+  test('Converts amount.', () async {
     convertAmount(geoCurrencies);
   });
 }

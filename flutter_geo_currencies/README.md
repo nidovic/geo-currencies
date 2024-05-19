@@ -4,11 +4,12 @@
 ![stars](https://img.shields.io/github/stars/nidovic/geo-currencies)
 
 Flutter Package that provides methods for fetching currencies information.
+All information about conversion currency are updated once a day.
 
 ## Features
 * get currency data by coordinate: The library provides methods to get currency data of a given geographic coordinate.
 * format amount with currency: The library provides methods to easily format amount with currency symbol.
-* Address suggestions: The library provides methods to get address suggestions for a given address.
+* convert amount with currency: The library provides methods to easily convert amount the data source are fetched from [EXCHANGE RATE API DOCUMENTATION](https://www.exchangerate-api.com/docs/free).
 * Support for multiple languages: The methods accept an optional Locale parameter, which can be used to specify the language. The default language is English.
 
 ## Installation
@@ -24,17 +25,30 @@ The GeoCurrencies class is implemented as a interface, with a factory constructo
 
 For some tests in your code your can do:
 ```dart
-GeoCurrencies geoCurrencies = GeoCurrencies(GeoCurrenciesType.fake);
+final GeoCurrencies geoCurrencies = GeoCurrencies(
+    config: GeoCurrenciesConfig(
+        geoCurrenciesType: GeoCurrenciesType.fake,
+        decimalDigits: 2,
+        decimalSeparator: '.',
+        includeSymbol: true,
+        symbolSeparator: ' ',
+        locale: Locale('En', 'en'),
+        thousandSeparator: ','),
+  );
 ```
 For live implementation in your code your can do:
 ```dart
-GeoCurrencies geoCurrencies = GeoCurrencies(GeoCurrenciesType.live);
+final GeoCurrencies geoCurrencies = GeoCurrencies(
+    config: GeoCurrenciesConfig(
+        geoCurrenciesType: GeoCurrenciesType.live,
+        decimalDigits: 2,
+        decimalSeparator: '.',
+        includeSymbol: true,
+        symbolSeparator: ' ',
+        locale: Locale('En', 'en'),
+        thousandSeparator: ','),
+  );
 ```
-Or
-```dart
-GeoCurrencies geoCurrencies = GeoCurrencies();
-```
-
 ### getCurrencyDataByCoordinate
 ```dart
   CurrencyData? currencyData = await geoCurrencies.getCurrencyDataByCoordinate(
@@ -60,10 +74,32 @@ CurrencyData is a class that represents a currency and its details. It has the f
 
 | Attribute     | Type   | Description |
 |---------------|--------|-------------|
-| codeAlpha3     | String | represents the currency code in form alpha 3. |
+| currencyCodeIso4217     | String | represents the currency code in form iso 4217. |
 | name      | String | represents the currency name. |
 | countryName      | String    | represents the country where the currency is used. |
 | symbol  | String    | represents the symbol of the currency. |
+
+### convertAmount
+```dart
+  Future<ConversionData?> convertAmount({
+    required num amount,
+    required String fromCurrencyCodeIso4217,
+    required String toCurrencyCodeIso4217,
+  })
+```
+## Responses
+
+ConversionData is a class that represents a conversion data and its details. It has the following attributes:
+
+| Attribute     | Type   | Description |
+|---------------|--------|-------------|
+| baseAmount     | num | represents the amount to convert. |
+| succeeded      | bool | wether the conversion is succeed. |
+| amountConverted      | num    | represents the amount converted. |
+| formatAmountConverted  | String    | represents the format amount converted. |
+| toCurrencyCodeIso4217  | String    | represents the currency code iso 4217 to which we must convert. |
+| fromCurrencyCodeIso4217  | String    | represents the currency code iso 4217 from which to convert. |
+| currencyConversionData  | CurrencyConversionData    | represents the currency conversion data. |
 
 ## Dependencies
 ```yaml
@@ -71,3 +107,8 @@ http: ^1.1.0
 intl: ^0.19.1
 logging: ^1.0.2
 ```
+
+## Additional information
+the library uses the following APIs:
+* [EXCHANGE RATE API DOCUMENTATION](https://www.exchangerate-api.com/docs/free)
+* [EXCHANGE RATE API TERMS](https://www.exchangerate-api.com/terms)
