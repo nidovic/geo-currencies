@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../geo_currencies.dart';
 import '../models/conversion_data.dart';
+import '../models/currency_conversion_data.dart';
 import '../models/currency_data.dart';
 import '../services/exchange_rate.dart';
 import 'common/functions.dart';

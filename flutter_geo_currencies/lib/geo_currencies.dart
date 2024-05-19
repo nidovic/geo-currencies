@@ -7,6 +7,10 @@ import 'src/implementations/live.dart';
 import 'src/models/conversion_data.dart';
 import 'src/models/currency_data.dart';
 
+export './src/models/conversion_data.dart';
+export './src/models/currency_conversion_data.dart';
+export './src/models/currency_data.dart';
+
 /// Supported geocoding backends.
 enum GeoCurrenciesType {
   /// GeoCurrencies for live implementation.

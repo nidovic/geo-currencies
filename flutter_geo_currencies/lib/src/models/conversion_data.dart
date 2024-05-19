@@ -1,4 +1,4 @@
-import '../services/exchange_rate.dart';
+import 'currency_conversion_data.dart';
 
 /// Representation of the conversion data.
 class ConversionData {
