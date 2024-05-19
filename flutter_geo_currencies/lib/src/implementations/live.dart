@@ -1,10 +1,11 @@
-import 'dart:ui';
-
 import 'package:intl/intl.dart';
 
 import '../../geo_currencies.dart';
+import '../models/conversion_data.dart';
 import '../models/currency_data.dart';
+import '../services/exchange_rate.dart';
 import '../services/open_street_map_utils.dart';
+import 'common/functions.dart';
 
 /// Represents country code associated with his information.
 const Map<String, Map<String, String>> _countryCurrencyData = {
@@ -990,9 +991,14 @@ const Map<String, Map<String, String>> _countryCurrencyData = {
   },
 };
 
-/// An implementation of [GeoCurrenciesInterface] used for live implementation.
-class GeoCurrenciesLiveImplementation implements GeoCurrenciesInterface {
+/// An implementation of [GeoCurrencies] used for live implementation.
+class GeoCurrenciesLiveImplementation implements GeoCurrencies {
+  final GeoCurrenciesConfig _config;
+
   final GeocodingOpenStreetMap _geocoding = GeocodingOpenStreetMap();
+
+  /// Constructs a new [GeoCurrenciesLiveImplementation].
+  GeoCurrenciesLiveImplementation(this._config);
 
   /// Get the currency data.
   Map<String, String>? _getCurrencyData(String? countryCode) {
@@ -1020,11 +1026,11 @@ class GeoCurrenciesLiveImplementation implements GeoCurrenciesInterface {
     }
 
     return CurrencyData(
-      codeAlpha3: currency[CurrencyData.keyCodeAlpha3],
+      codeIso4217: currency[CurrencyData.keyCodeIso4217],
       countryName: currency[CurrencyData.keyCountryName],
       name: currency[CurrencyData.keyName],
       symbol: NumberFormat.simpleCurrency(
-        name: currency[CurrencyData.keyCodeAlpha3],
+        name: currency[CurrencyData.keyCodeIso4217],
       ).currencySymbol,
     );
   }
@@ -1032,14 +1038,30 @@ class GeoCurrenciesLiveImplementation implements GeoCurrenciesInterface {
   @override
   String formatAmountWithCurrencySymbol({
     required num amount,
-    required String currencyCodeAlpha3,
-    Locale? locale = const Locale('en', 'US'),
+    required String currencyCodeIso4217,
   }) =>
-      NumberFormat.currency(
-        name: currencyCodeAlpha3,
-        symbol: '${NumberFormat.simpleCurrency(
-          name: currencyCodeAlpha3,
-        ).currencySymbol} ',
-        locale: locale?.languageCode.toLowerCase(),
-      ).format(amount);
+      formatAmount(
+        amount: amount,
+        currencyCodeIso4217: currencyCodeIso4217,
+        config: _config,
+      );
+
+  @override
+  Future<ConversionData?> convertAmount({
+    required num amount,
+    required String fromCurrencyCodeIso4217,
+    required String toCurrencyCodeIso4217,
+  }) async {
+    final currencyConversionData = await ExchangeRate.getConversionData(
+      fromCurrencyCodeIso4217: fromCurrencyCodeIso4217,
+    );
+
+    return await ExchangeRate.convertAmount(
+      amount: amount,
+      config: _config,
+      fromCurrencyCodeIso4217: fromCurrencyCodeIso4217,
+      toCurrencyCodeIso4217: toCurrencyCodeIso4217,
+      currencyConversionData: currencyConversionData,
+    );
+  }
 }

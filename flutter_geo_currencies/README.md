@@ -17,22 +17,22 @@ Add this to your package's pubspec.yaml file:
 
 ```yaml
 dependencies:
-  geo-currencies: <lastest>
+  geo_currencies: <lastest>
 ```
 ## Usage
-The GeocurrenciesInterface class is implemented as a interface, with a factory constructor that returns different instance by optional GeoCurrenciesType given, by default the GeoCurrenciesType is live.
+The GeoCurrencies class is implemented as a interface, with a factory constructor that returns different instance by optional GeoCurrenciesType given, by default the GeoCurrenciesType is live.
 
 For some tests in your code your can do:
 ```dart
-GeoCurrenciesInterface geoCurrencies = GeoCurrenciesInterface(GeoCurrenciesType.fake);
+GeoCurrencies geoCurrencies = GeoCurrencies(GeoCurrenciesType.fake);
 ```
 For live implementation in your code your can do:
 ```dart
-GeoCurrenciesInterface geoCurrencies = GeoCurrenciesInterface(GeoCurrenciesType.live);
+GeoCurrencies geoCurrencies = GeoCurrencies(GeoCurrenciesType.live);
 ```
 Or
 ```dart
-GeoCurrenciesInterface geoCurrencies = GeoCurrenciesInterface();
+GeoCurrencies geoCurrencies = GeoCurrencies();
 ```
 
 ### getCurrencyDataByCoordinate
