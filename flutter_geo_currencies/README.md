@@ -166,3 +166,4 @@ logging: ^1.0.2
 the library uses the following APIs:
 * [EXCHANGE RATE API DOCUMENTATION](https://www.exchangerate-api.com/docs/free)
 * [EXCHANGE RATE API TERMS](https://www.exchangerate-api.com/terms)
+* [WIKIPEDIA ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
