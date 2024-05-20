@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 import '../../geo_currencies.dart';
 import '../services/exchange_rate.dart';
-import '../services/open_street_map_utils.dart';
+import '../services/open_street_map.dart';
 import 'common/functions.dart';
 
 /// Represents country code associated with his information.
@@ -993,8 +993,6 @@ const Map<String, Map<String, String>> _countryCurrencyData = {
 class GeoCurrenciesLiveImplementation implements GeoCurrencies {
   final GeoCurrenciesConfig _config;
 
-  final GeocodingOpenStreetMap _geocoding = GeocodingOpenStreetMap();
-
   /// Constructs a new [GeoCurrenciesLiveImplementation].
   GeoCurrenciesLiveImplementation(this._config);
 
@@ -1012,7 +1010,7 @@ class GeoCurrenciesLiveImplementation implements GeoCurrencies {
     required double latitude,
     required double longitude,
   }) async {
-    final countryCode = await _geocoding.getCountryCode(
+    final countryCode = await GeocodingOpenStreetMap.getCountryCode(
       latitude: latitude,
       longitude: longitude,
     );

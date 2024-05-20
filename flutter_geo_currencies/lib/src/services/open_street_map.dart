@@ -6,13 +6,13 @@ import 'package:logging/logging.dart';
 
 /// An implementation of [GeocodingOpenStreetMap] that uses Open street map.
 class GeocodingOpenStreetMap {
-  final _log = Logger('GeocodingOpenStreetMapImplementation');
+  static final _log = Logger('GeocodingOpenStreetMapImplementation');
 
   /// Open Street map's Api endpoint url for geocoding.
-  final String _url = 'nominatim.openstreetmap.org';
+  static const String _url = 'nominatim.openstreetmap.org';
 
   /// Gets a geocoding's address with a pair [latitude] and [longitude], Link to API documentation : https://nominatim.org/release-docs/latest/api/Reverse/.
-  Future<String?> getCountryCode({
+  static Future<String?> getCountryCode({
     required double latitude,
     required double longitude,
   }) async {
