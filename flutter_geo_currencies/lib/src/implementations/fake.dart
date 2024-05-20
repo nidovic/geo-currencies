@@ -3,9 +3,6 @@ import 'dart:ui';
 import 'package:intl/intl.dart';
 
 import '../../geo_currencies.dart';
-import '../models/conversion_data.dart';
-import '../models/currency_conversion_data.dart';
-import '../models/currency_data.dart';
 import '../services/exchange_rate.dart';
 import 'common/functions.dart';
 
@@ -178,8 +175,8 @@ const _currencyConversionData = {
     'YER': 272.33,
     'ZAR': 19.77,
     'ZMW': 27.7,
-    'ZWL': 14.91
-  }
+    'ZWL': 14.91,
+  },
 };
 
 /// An implementation of [GeoCurrencies] used for live implementation.
@@ -218,16 +215,52 @@ class GeoCurrenciesFakeImplementation implements GeoCurrencies {
         amount: amount,
         currencyCodeIso4217: currencyCodeIso4217,
         config: _config,
+        formatWithSymbol: true,
       );
 
   @override
-  Future<ConversionData?> convertAmount(
-      {required num amount,
-      required String fromCurrencyCodeIso4217,
-      required String toCurrencyCodeIso4217}) async {
+  String formatAmountWithCurrencyCode(
+          {required num amount, required String currencyCodeIso4217}) =>
+      formatAmount(
+        amount: amount,
+        currencyCodeIso4217: currencyCodeIso4217,
+        config: _config,
+        formatWithSymbol: false,
+      );
+
+  @override
+  Future<ConversionData?> convertAmountWithCurrenciesCodes({
+    required num amount,
+    required String fromCurrencyCodeIso4217,
+    required String toCurrencyCodeIso4217,
+  }) async {
     return await ExchangeRate.convertAmount(
       amount: amount,
       config: _config,
+      fromCurrencyCodeIso4217: fromCurrencyCodeIso4217,
+      toCurrencyCodeIso4217: toCurrencyCodeIso4217,
+      currencyConversionData:
+          CurrencyConversionData.fromJson(_currencyConversionData),
+    );
+  }
+
+  @override
+  AmountConvertedData convertAmountWithRate(
+          {required num amount,
+          required num rate,
+          required String toCurrencyCodeIso4217}) =>
+      convertAmount(
+          amount: amount,
+          config: _config,
+          rate: rate,
+          toCurrencyCodeIso4217: toCurrencyCodeIso4217);
+
+  @override
+  Future<RateData?> getRate({
+    required String fromCurrencyCodeIso4217,
+    required String toCurrencyCodeIso4217,
+  }) async {
+    return await ExchangeRate.getRate(
       fromCurrencyCodeIso4217: fromCurrencyCodeIso4217,
       toCurrencyCodeIso4217: toCurrencyCodeIso4217,
       currencyConversionData:

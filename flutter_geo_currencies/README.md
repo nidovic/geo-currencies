@@ -49,23 +49,34 @@ final GeoCurrencies geoCurrencies = GeoCurrencies(
         thousandSeparator: ','),
   );
 ```
-### getCurrencyDataByCoordinate
-```dart
-  CurrencyData? currencyData = await geoCurrencies.getCurrencyDataByCoordinate(
-    latitude: 37.4219999,
-    longitude: 32.0840575,
-  );
-```
-## Responses
-
-CurrencyData is a class that represents a currency and its details. It has the following attributes:
 
 ### formatAmountWithCurrencySymbol
 ```dart
   String amountToDisplay = geoCurrencies.formatAmountWithCurrencySymbol(
     amount: 10,
     currencyCodeAlpha3: 'USD',
-    locale: const Locale('en','US')
+  );
+```
+## Responses
+
+String ($ 10)
+
+### formatAmountWithCurrencySymbol
+```dart
+  String amountToDisplay = geoCurrencies.formatAmountWithCurrencyCode(
+    amount: 10,
+    currencyCodeAlpha3: 'USD',
+  );
+```
+## Responses
+
+String (USD 10)
+
+### getCurrencyDataByCoordinate
+```dart
+  CurrencyData? currencyData = await geoCurrencies.getCurrencyDataByCoordinate(
+    latitude: 37.4219999,
+    longitude: 32.0840575,
   );
 ```
 ## Responses
@@ -79,13 +90,13 @@ CurrencyData is a class that represents a currency and its details. It has the f
 | countryName      | String    | represents the country where the currency is used. |
 | symbol  | String    | represents the symbol of the currency. |
 
-### convertAmount
+### convertAmountWithCurrenciesCodes
 ```dart
-  Future<ConversionData?> convertAmount({
+  Future<ConversionData?> convertAmountWithCurrenciesCodes({
     required num amount,
     required String fromCurrencyCodeIso4217,
     required String toCurrencyCodeIso4217,
-  })
+  });
 ```
 ## Responses
 
@@ -96,10 +107,53 @@ ConversionData is a class that represents a conversion data and its details. It 
 | baseAmount     | num | represents the amount to convert. |
 | succeeded      | bool | wether the conversion is succeed. |
 | amountConverted      | num    | represents the amount converted. |
-| formatAmountConverted  | String    | represents the format amount converted. |
+| formattedAmountConverted  | String    | represents the format amount converted. |
 | toCurrencyCodeIso4217  | String    | represents the currency code iso 4217 to which we must convert. |
 | fromCurrencyCodeIso4217  | String    | represents the currency code iso 4217 from which to convert. |
+| rate  | num    | represents the rate use for conversion. |
 | currencyConversionData  | CurrencyConversionData    | represents the currency conversion data. |
+
+### getRate
+```dart
+  Future<RateData?> getRate({
+    required String fromCurrencyCodeIso4217,
+    required String toCurrencyCodeIso4217,
+  });
+```
+## Responses
+
+RateData is a class that represents a rate data and its details. It has the following attributes:
+
+| Attribute     | Type   | Description |
+|---------------|--------|-------------|
+| succeeded      | bool | wether the conversion is succeed. |
+| formattedAmountConvertedWithCurrencyCode  | String    | represents the formatted amount converted with currency code. |
+| formattedAmountConvertedWithCurrencySymbol  | String    | represents the formatted amount converted with currency symbol. |
+| toCurrencyCodeIso4217  | String    | represents the currency code iso 4217 to which we must convert. |
+| fromCurrencyCodeIso4217  | String    | represents the currency code iso 4217 from which to convert. |
+| rate  | num    | represents the rate fetches. |
+| currencyConversionData  | CurrencyConversionData    | represents the currency conversion data. |
+
+### getRate
+```dart
+  AmountConvertedData convertAmountWithRate({
+    required num amount,
+    required num rate,
+    required String toCurrencyCodeIso4217,
+  });
+```
+## Responses
+
+AmountConvertedData is a class that represents a amount converted data and its details. It has the following attributes:
+
+| Attribute     | Type   | Description |
+|---------------|--------|-------------|
+| formattedAmountConvertedWithCurrencyCode  | String    | represents the formatted amount converted with currency code. |
+| formattedAmountConvertedWithCurrencySymbol  | String    | represents the formatted amount converted with currency symbol. |
+| toCurrencyCodeIso4217  | String    | represents the currency code iso 4217 to which we must convert. |
+| baseAmount  | num    | represents the base amount. |
+| amountConverted  | num    | represents the amount converted. |
+| rate  | num    | represents the rate fetches. |
 
 ## Dependencies
 ```yaml
@@ -112,3 +166,4 @@ logging: ^1.0.2
 the library uses the following APIs:
 * [EXCHANGE RATE API DOCUMENTATION](https://www.exchangerate-api.com/docs/free)
 * [EXCHANGE RATE API TERMS](https://www.exchangerate-api.com/terms)
+* [WIKIPEDIA ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
