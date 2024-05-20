@@ -2,16 +2,18 @@ library geo_currencies;
 
 import 'dart:ui';
 
+import 'package:geo_currencies/geo_currencies.dart';
+
 import 'src/implementations/fake.dart';
 import 'src/implementations/live.dart';
-import 'src/models/conversion_data.dart';
-import 'src/models/currency_data.dart';
 
 export './src/models/conversion_data.dart';
 export './src/models/currency_conversion_data.dart';
 export './src/models/currency_data.dart';
+export './src/models/amount_converted_data.dart';
+export './src/models/rate_data.dart';
 
-/// Supported geocoding backends.
+/// Enum representing supported geo currency types.
 enum GeoCurrenciesType {
   /// GeoCurrencies for live implementation.
   live,
@@ -20,7 +22,7 @@ enum GeoCurrenciesType {
   fake,
 }
 
-/// The representation of geo currencies config.
+/// Configuration class for GeoCurrencies.
 class GeoCurrenciesConfig {
   /// The geo currency type.
   final GeoCurrenciesType geoCurrenciesType;
@@ -74,22 +76,45 @@ abstract class GeoCurrencies {
     }
   }
 
-  /// Gets a currency date use in specify place
-  /// with a pair [latitude] and [longitude].
+  /// Retrieves currency data for a specific location
+  /// specified by [latitude] and [longitude].
   Future<CurrencyData?> getCurrencyDataByCoordinate({
     required double latitude,
     required double longitude,
   });
 
-  /// Formats the given amount with currency to an easily readable string.
+  /// Formats the given [amount] with the currency
+  /// symbol of [currencyCodeIso4217] into a readable string.
   String formatAmountWithCurrencySymbol({
     required num amount,
     required String currencyCodeIso4217,
   });
 
-  /// Converts the given amount with currency.
-  Future<ConversionData?> convertAmount({
+  /// Formats the given [amount] with the currency
+  /// code of [currencyCodeIso4217] into a readable string.
+  String formatAmountWithCurrencyCode({
     required num amount,
+    required String currencyCodeIso4217,
+  });
+
+  /// Converts the given [amount] from [fromCurrencyCodeIso4217]
+  /// to [toCurrencyCodeIso4217] using currency codes.
+  Future<ConversionData?> convertAmountWithCurrenciesCodes({
+    required num amount,
+    required String fromCurrencyCodeIso4217,
+    required String toCurrencyCodeIso4217,
+  });
+
+  /// Converts the given [amount] using the [rate] to [toCurrencyCodeIso4217].
+  AmountConvertedData convertAmountWithRate({
+    required num amount,
+    required num rate,
+    required String toCurrencyCodeIso4217,
+  });
+
+  /// Retrieves the conversion rate between [fromCurrencyCodeIso4217]
+  /// and [toCurrencyCodeIso4217].
+  Future<RateData?> getRate({
     required String fromCurrencyCodeIso4217,
     required String toCurrencyCodeIso4217,
   });

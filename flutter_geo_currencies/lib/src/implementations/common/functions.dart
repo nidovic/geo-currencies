@@ -7,13 +7,18 @@ import '../../../geo_currencies.dart';
 String formatAmount({
   required num amount,
   required String currencyCodeIso4217,
+  required bool formatWithSymbol,
   required GeoCurrenciesConfig config,
 }) {
-  final symbol = config.includeSymbol
-      ? NumberFormat.simpleCurrency(
-          name: currencyCodeIso4217,
-        ).currencySymbol
-      : '';
+  String symbol = '';
+  if (config.includeSymbol) {
+    symbol = formatWithSymbol
+        ? NumberFormat.simpleCurrency(
+            locale: config.locale.toString(),
+            name: currencyCodeIso4217,
+          ).currencySymbol
+        : currencyCodeIso4217.toUpperCase();
+  }
 
   final formattedAmount = NumberFormat.currency(
     locale: config.locale.languageCode.toLowerCase(),
@@ -46,3 +51,31 @@ String formatAmount({
 
   return symbol + config.symbolSeparator + formattedAmountWithCustomSymbols;
 }
+
+/// Converts the given [amount] using the [rate] to [toCurrencyCodeIso4217].
+AmountConvertedData convertAmount({
+  required num amount,
+  required num rate,
+  required String toCurrencyCodeIso4217,
+  required GeoCurrenciesConfig config,
+}) =>
+    AmountConvertedData.fromJson({
+      AmountConvertedData.keyBaseAmount: amount,
+      AmountConvertedData.keyToCurrencyCodeIso4217: toCurrencyCodeIso4217,
+      AmountConvertedData.keyAmountConverted: amount * rate,
+      AmountConvertedData.keyFormattedAmountConvertedWithCurrencySymbol:
+          formatAmount(
+        amount: amount * rate,
+        config: config,
+        currencyCodeIso4217: toCurrencyCodeIso4217,
+        formatWithSymbol: true,
+      ),
+      AmountConvertedData.keyFormattedAmountConvertedWithCurrencyCode:
+          formatAmount(
+        amount: amount * rate,
+        config: config,
+        currencyCodeIso4217: toCurrencyCodeIso4217,
+        formatWithSymbol: false,
+      ),
+      AmountConvertedData.keyRate: rate,
+    });

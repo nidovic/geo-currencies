@@ -6,8 +6,6 @@ import 'package:logging/logging.dart';
 
 import '../../geo_currencies.dart';
 import '../implementations/common/functions.dart';
-import '../models/conversion_data.dart';
-import '../models/currency_conversion_data.dart';
 
 /// An implementation of [ExchangeRate].
 class ExchangeRate {
@@ -74,11 +72,56 @@ class ExchangeRate {
       ConversionData.keyAmountConverted: amount * rate,
       ConversionData.keyFromCurrencyCodeIso4217: fromCurrencyCodeIso4217,
       ConversionData.keyToCurrencyCodeIso4217: toCurrencyCodeIso4217,
-      ConversionData.keyFormatAmountConverted: formatAmount(
+      ConversionData.keyRate: rate,
+      ConversionData.keyFormattedAmountConvertedWithCurrencySymbol:
+          formatAmount(
         amount: amount * rate,
         config: config,
         currencyCodeIso4217: toCurrencyCodeIso4217,
+        formatWithSymbol: true,
       ),
+      ConversionData.keyFormattedAmountConvertedWithCurrencyCode: formatAmount(
+        amount: amount * rate,
+        config: config,
+        currencyCodeIso4217: toCurrencyCodeIso4217,
+        formatWithSymbol: false,
+      ),
+    });
+  }
+
+  /// Gets the rates.
+  static Future<RateData?> getRate({
+    required String fromCurrencyCodeIso4217,
+    required String toCurrencyCodeIso4217,
+    required CurrencyConversionData? currencyConversionData,
+  }) async {
+    if (currencyConversionData == null) {
+      return null;
+    }
+    if (currencyConversionData.error != null) {
+      return RateData.fromJson({
+        RateData.keySucceeded: false,
+        RateData.keyError: currencyConversionData.error,
+      });
+    }
+    final toCurrencyCode = toCurrencyCodeIso4217.toUpperCase();
+    final rate = currencyConversionData.rates?[toCurrencyCode];
+
+    if (rate == null) {
+      return RateData.fromJson({
+        RateData.keySucceeded: false,
+        RateData.keyError:
+            'toCurrencyCodeIso4217 is unsupported : $toCurrencyCodeIso4217',
+      });
+    }
+
+    return RateData.fromJson({
+      RateData.keySucceeded: true,
+      RateData.keyError: null,
+      RateData.keyCurrencyConversionData: currencyConversionData,
+      RateData.keyFromCurrencyCodeIso4217: fromCurrencyCodeIso4217,
+      RateData.keyToCurrencyCodeIso4217: toCurrencyCodeIso4217,
+      RateData.keyRate: rate,
     });
   }
 }
