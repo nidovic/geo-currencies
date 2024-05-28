@@ -1,8 +1,9 @@
 name: geo_currencies
 description: "Package to get information about currency used in some countries"
-version: 0.0.4
+version: 0.0.5
 homepage: https://github.com/nidovic/geo-currencies/tree/main/flutter_geo_currencies
 repository: https://github.com/nidovic/geo-currencies/tree/main/flutter_geo_currencies
+issue_tracker: https://github.com/nidovic/geo-currencies/issues
 platforms:
   android:
   ios:
@@ -10,6 +11,13 @@ platforms:
   macos:
   web:
   windows:
+topics:
+ - currency
+ - currencies
+ - coordinates
+ - formatting
+ - conversions
+ - rate
 
 environment:
   sdk: '>=3.3.1 <4.0.0'

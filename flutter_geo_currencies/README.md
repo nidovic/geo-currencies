@@ -1,9 +1,9 @@
 # GeoCurrencies
-[![pub package](https://img.shields.io/pub/v/geo-curencies.svg)](https://pub.dev/packages/geo-curencies)
+[![pub package](https://img.shields.io/pub/v/geo_currencies.svg)](https://pub.dev/packages/geo_currencies)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![stars](https://img.shields.io/github/stars/nidovic/geo-currencies)
 
-Flutter Package that provides methods for fetching currencies information.
+Flutter Package that provides methods for fetching currencies information,
 All information about conversion currency are updated once a day.
 
 ## Features
@@ -18,9 +18,16 @@ Add this to your package's pubspec.yaml file:
 
 ```yaml
 dependencies:
-  geo_currencies: <lastest>
+  geo_currencies: ^0.0.5
 ```
 ## Usage
+
+Import the package in your Dart code:
+
+```dart
+import 'package:geo_currencies/geo_currencies.dart';
+```
+
 The GeoCurrencies class is implemented as a interface, with a factory constructor that returns different instance by optional GeoCurrenciesType given, by default the GeoCurrenciesType is live.
 
 For some tests in your code your can do:
@@ -59,7 +66,7 @@ final GeoCurrencies geoCurrencies = GeoCurrencies(
 ```
 ## Responses
 
-String ($ 10)
+Output: $ 10
 
 ### formatAmountWithCurrencySymbol
 ```dart
@@ -70,7 +77,7 @@ String ($ 10)
 ```
 ## Responses
 
-String (USD 10)
+Output: USD 10
 
 ### getCurrencyDataByCoordinate
 ```dart
