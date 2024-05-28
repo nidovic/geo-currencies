@@ -13,3 +13,6 @@
 ## Version 0.0.4:
 - Added `getRate` function to retrieve the conversion rate between two currency codes (ISO 4217).
 - Added `convertAmountWithRate` function to convert the given amount using the provided rate to the target currency code (ISO 4217).
+
+## Version 0.0.5:
+- Update readme and pubspec.yaml to add topic.
