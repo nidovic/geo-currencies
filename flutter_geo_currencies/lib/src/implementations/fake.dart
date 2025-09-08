@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:geo_currencies/src/implementations/live.dart';
 import 'package:intl/intl.dart';
 
 import '../../geo_currencies.dart';
@@ -266,5 +267,15 @@ class GeoCurrenciesFakeImplementation implements GeoCurrencies {
       currencyConversionData:
           CurrencyConversionData.fromJson(_currencyConversionData),
     );
+  }
+
+  @override
+  List<String> getCurrencyCodesIso4217() {
+    return countryCurrencyData.values.map((e) => e['codeAlpha3']!).toList();
+  }
+
+  @override
+  List<String> getCountryCodesIso31661Alpha2() {
+    return countryCurrencyData.keys.toList();
   }
 }

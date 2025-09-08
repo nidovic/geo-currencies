@@ -1,3 +1,15 @@
+/// A library for managing geographic currency operations.
+///
+/// The `geo_currencies` library provides tools for handling
+/// currency data based on geographic locations, formatting currency
+/// amounts, and converting currencies using various configurations.
+/// It supports both live and fake implementations for different use cases.
+///
+/// Key features:
+/// - Retrieve currency data by geographic coordinates.
+/// - Format currency amounts with symbols or codes.
+/// - Convert currency amounts using exchange rates.
+/// - Flexible configuration options for formatting and implementation types.
 library geo_currencies;
 
 import 'dart:ui';
@@ -71,8 +83,6 @@ abstract class GeoCurrencies {
         return GeoCurrenciesLiveImplementation(config);
       case GeoCurrenciesType.fake:
         return GeoCurrenciesFakeImplementation(config);
-      default:
-        return GeoCurrenciesLiveImplementation(config);
     }
   }
 
@@ -118,4 +128,12 @@ abstract class GeoCurrencies {
     required String fromCurrencyCodeIso4217,
     required String toCurrencyCodeIso4217,
   });
+
+  /// Retrieves the list of currency codes ISO 4217.
+  List<String> getCurrencyCodesIso4217();
+
+  /// Retrieves the list of country codes ISO 3166-1 alpha-2.
+  List<String> getCountryCodesIso31661Alpha2();
+
+
 }

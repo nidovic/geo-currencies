@@ -1,6 +1,6 @@
 name: geo_currencies
 description: "Package to get information about currency used in some countries"
-version: 0.0.5
+version: 0.0.6
 homepage: https://github.com/nidovic/geo-currencies/tree/main/flutter_geo_currencies
 repository: https://github.com/nidovic/geo-currencies/tree/main/flutter_geo_currencies
 issue_tracker: https://github.com/nidovic/geo-currencies/issues
@@ -14,13 +14,12 @@ platforms:
 topics:
  - currency
  - currencies
- - coordinates
  - formatting
  - conversions
  - rate
 
 environment:
-  sdk: '>=3.3.1 <4.0.0'
+  sdk: '>=3.8.1 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
@@ -28,15 +27,15 @@ dependencies:
     sdk: flutter
 
   # A util for making HTTP requests.
-  http: ^1.1.0
+  http: ^1.2.2
 
   # Logging debug and error messages.
-  logging: ^1.0.2
+  logging: ^1.2.0
 
   # Provides internationalization and localization facilities, including message translation,
   # plurals and genders, date/number formatting and parsing, and bidirectional text.
-  intl: ^0.19.0
-  
+  intl: ^0.20.2
+
 
 dev_dependencies:
   flutter_test:

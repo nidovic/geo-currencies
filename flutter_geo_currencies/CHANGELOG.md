@@ -16,3 +16,7 @@
 
 ## Version 0.0.5:
 - Update readme and pubspec.yaml to add topic.
+
+## Version 0.0.6:
+- Add function getCountryCodesIso31661Alpha2.
+- Add function getCurrencyCodesIso4217.
