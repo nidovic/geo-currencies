@@ -6,7 +6,7 @@ import '../services/open_street_map.dart';
 import 'common/functions.dart';
 
 /// Represents country code associated with his information.
-const Map<String, Map<String, String>> _countryCurrencyData = {
+const Map<String, Map<String, String>> countryCurrencyData = {
   'AF': {
     'codeAlpha3': 'AFN',
     'name': 'Afghan Afghani',
@@ -998,8 +998,8 @@ class GeoCurrenciesLiveImplementation implements GeoCurrencies {
 
   /// Get the currency data.
   Map<String, String>? _getCurrencyData(String? countryCode) {
-    if (_countryCurrencyData.containsKey(countryCode?.toUpperCase())) {
-      return _countryCurrencyData[countryCode];
+    if (countryCurrencyData.containsKey(countryCode?.toUpperCase())) {
+      return countryCurrencyData[countryCode];
     }
 
     return null;
@@ -1097,5 +1097,15 @@ class GeoCurrenciesLiveImplementation implements GeoCurrencies {
       toCurrencyCodeIso4217: toCurrencyCodeIso4217,
       currencyConversionData: currencyConversionData,
     );
+  }
+  
+  @override
+  List<String> getCurrencyCodesIso4217() {
+    return countryCurrencyData.values.map((e) => e['codeAlpha3']!).toList();
+  }
+
+  @override
+  List<String> getCountryCodesIso31661Alpha2() {
+    return countryCurrencyData.keys.toList();
   }
 }
